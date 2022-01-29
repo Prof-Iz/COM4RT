@@ -1,6 +1,6 @@
 <!--  src/routes/$layout.svelte -->
 <script>
-	import '../tailwind.css';
+	import '../../tailwind.css';
 </script>
 
 <link
@@ -27,7 +27,7 @@
 		</div>
 		<!-- DROP down button logic -->
 		<div class="flex-none lg:hidden">
-			<div class="dropdown dropdown-end">
+			<div class="dropdown dropdown-end ">
 				<div tabindex="0" class="btn btn-ghost rounded-btn">
 					<i class="fa fa-chevron-circle-down" aria-hidden="true" />
 				</div>
@@ -41,8 +41,8 @@
 							Info
 						</a>
 					</li>
-					<li class="w-full">
-						<a class="btn btn-ghost btn-sm rounded-btn">
+					<li class="w-full 0">
+						<a class="btn btn-ghost btn-sm rounded-btn ">
 							<i class="fa fa-user-circle-o px-2" aria-hidden="true" />
 							Logout
 						</a>
