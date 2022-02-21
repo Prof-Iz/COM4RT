@@ -12,7 +12,7 @@
 			<input type="password" placeholder="password" class="input" />
 			<div class="flex flex-row">
 				<button class="btn btn-primary mt-4 mr-4" type="submit">Submit</button>
-				<button class="btn btn-secondary mt-4 mr-4" type="submit">Shit</button>
+				<button class="btn btn-secondary mt-4 mr-4" type="submit">Sm btn or smthn</button>
 			</div>
 		</div>
 	</div>
