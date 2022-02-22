@@ -14,6 +14,9 @@
 </script>
 
 <script>
+	function formatDate(date) {
+		return new Date(date).toUTCString();
+	}
 	export let data;
 	export let params;
 </script>
@@ -33,7 +36,7 @@
 		{#each data['status'] as data_row}
 			<tr>
 				<th />
-				<td>{data_row.logged_at}</td>
+				<td>{formatDate(data_row.logged_at)}</td>
 				<td>{data_row.temp}</td>
 				<td>{data_row.humidity}</td>
 			</tr>
