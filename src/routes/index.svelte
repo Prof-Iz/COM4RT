@@ -1,5 +1,7 @@
 <script>
 	import '../tailwind.css';
+	import dotenv from 'dotenv';
+	dotenv.config();
 </script>
 
 <div class="m-6">
