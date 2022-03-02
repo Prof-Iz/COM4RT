@@ -2,7 +2,6 @@
 	export const load = async ({ fetch, params }) => {
 		const res = await fetch(`/api/view/${params.id}.json`);
 		const data = await res.json();
-		console.log(data);
 
 		return {
 			props: {
@@ -24,6 +23,7 @@
 <h2>Data collected in DB for Device {params.id}</h2>
 <br />
 <div class="overflow-x-auto">
+	<div id="myDiv" />
 	<table class="table w-full">
 		<thead>
 			<tr>
