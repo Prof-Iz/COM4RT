@@ -2,7 +2,35 @@
 <script>
 	import { onMount } from 'svelte';
 
-	import {
+	// import {
+	// 	Chart,
+	// 	ArcElement,
+	// 	LineElement,
+	// 	BarElement,
+	// 	PointElement,
+	// 	BarController,
+	// 	BubbleController,
+	// 	DoughnutController,
+	// 	LineController,
+	// 	PieController,
+	// 	PolarAreaController,
+	// 	RadarController,
+	// 	ScatterController,
+	// 	CategoryScale,
+	// 	LinearScale,
+	// 	LogarithmicScale,
+	// 	RadialLinearScale,
+	// 	TimeScale,
+	// 	TimeSeriesScale,
+	// 	Decimation,
+	// 	Filler,
+	// 	Legend,
+	// 	Title,
+	// 	Tooltip,
+	// 	SubTitle
+	// } from 'chart.js';
+	import pkg from 'chart.js';
+	const {
 		Chart,
 		ArcElement,
 		LineElement,
@@ -28,7 +56,7 @@
 		Title,
 		Tooltip,
 		SubTitle
-	} from 'chart.js';
+	} = pkg;
 
 	Chart.register(
 		ArcElement,
