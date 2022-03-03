@@ -58,7 +58,8 @@
 	);
 
 	export let labels;
-	export let x_data;
+	export let temp_data;
+	export let humidity_data;
 
 	function makeGraph() {
 		const ctx = document.getElementById('myChart');
@@ -68,8 +69,15 @@
 				labels: labels,
 				datasets: [
 					{
-						label: 'My First Dataset',
-						data: x_data,
+						label: 'Temperature',
+						data: temp_data,
+						fill: false,
+						borderColor: 'rgb(200, 192, 192)',
+						tension: 0.1
+					},
+					{
+						label: 'Humidity',
+						data: humidity_data,
 						fill: false,
 						borderColor: 'rgb(75, 192, 192)',
 						tension: 0.1

@@ -14,20 +14,34 @@
 
 <script>
 	function formatDate(date) {
-		return new Date(date).toUTCString();
+		let d = new Date(date);
+		let utc = d.getTime() + d.getTimezoneOffset() * 60000;
+		let nd = new Date(utc + 3600000 * 8);
+		return nd.toLocaleString();
 	}
+
 	import Chart from '$lib/chart.svelte';
 	export let data;
 	export let params;
-	let x_data = [35, 36, 40, 36, 37];
-	let labels = [1300, 1315, 1330, 1345, 1400];
+
+	let temp_data = [];
+	let labels = [];
+	let humidity_data = [];
+
+	for (let i = 0; i < data['status'].length; i++) {
+		temp_data.push(data['status'][i].temp);
+		humidity_data.push(data['status'][i].humidity);
+		labels.push(formatDate(data['status'][i].logged_at));
+	}
+
+	console.log(temp_data, labels);
 </script>
 
 <h2>Data collected in DB for Device {params.id}</h2>
 <br />
 <div class="overflow-x-auto">
 	<div id="myDiv" />
-	<Chart {x_data} {labels} />
+	<Chart {temp_data} {labels} {humidity_data} />
 	<table class="table w-full">
 		<thead>
 			<tr>
