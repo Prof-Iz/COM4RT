@@ -73,6 +73,26 @@
 				}
 			},
 			curve: 'curveMonotoneX',
+			toolbar: {
+				enabled: true,
+				numberOfIcons: 2,
+				controls: [
+					{
+						type: 'Reset zoom'
+					},
+					{
+						type: 'Zoom in'
+					},
+					{
+						type: 'Zoom out'
+					}
+				]
+			},
+			zoomBar: {
+				top: {
+					enabled: true
+				}
+			},
 			height: '400px'
 		}}
 	/>
