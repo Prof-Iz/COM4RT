@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: ['./src/**/*.svelte', './src/**/*.css'],
-  darkMode: false,
+  darkMode: true,
   theme: {
     colors: {
       white: colors.white,

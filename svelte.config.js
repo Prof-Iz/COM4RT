@@ -11,11 +11,11 @@ const config = {
 		target: '#svelte',
 		vite: {
 			optimizeDeps: {
-				include: ['@carbon/charts'],
+				include: ['svelte-apexcharts', 'apexcharts'],
 			},
-			ssr: {
-				noExternal: [production && '@carbon/charts'].filter(Boolean),
-			},
+			// ssr: {
+			// 	noExternal: [production && '@svelte-apexcharts'].filter(Boolean),
+			// },
 		},
 	}
 };
