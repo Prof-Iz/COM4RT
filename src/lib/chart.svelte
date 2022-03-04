@@ -1,93 +1,35 @@
-<!-- CHART COMPONENT TO BE INSERTED WHERE NEEDED -->
 <script>
 	import { onMount } from 'svelte';
 
-	import {
-		Chart,
-		ArcElement,
-		LineElement,
-		BarElement,
-		PointElement,
-		BarController,
-		BubbleController,
-		DoughnutController,
-		LineController,
-		PieController,
-		PolarAreaController,
-		RadarController,
-		ScatterController,
-		CategoryScale,
-		LinearScale,
-		LogarithmicScale,
-		RadialLinearScale,
-		TimeScale,
-		TimeSeriesScale,
-		Decimation,
-		Filler,
-		Legend,
-		Title,
-		Tooltip,
-		SubTitle
-	} from 'chart.js';
+	export let options;
 
-	Chart.register(
-		ArcElement,
-		LineElement,
-		BarElement,
-		PointElement,
-		BarController,
-		BubbleController,
-		DoughnutController,
-		LineController,
-		PieController,
-		PolarAreaController,
-		RadarController,
-		ScatterController,
-		CategoryScale,
-		LinearScale,
-		LogarithmicScale,
-		RadialLinearScale,
-		TimeScale,
-		TimeSeriesScale,
-		Decimation,
-		Filler,
-		Legend,
-		Title,
-		Tooltip,
-		SubTitle
-	);
+	let ApexCharts;
+	let loaded = false;
 
-	export let labels;
-	export let temp_data;
-	export let humidity_data;
+	const chart = (node, options) => {
+		if (!loaded) return;
 
-	function makeGraph() {
-		const ctx = document.getElementById('myChart');
-		const myChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: labels,
-				datasets: [
-					{
-						label: 'Temperature',
-						data: temp_data,
-						fill: false,
-						borderColor: 'rgb(200, 192, 192)',
-						tension: 0.1
-					},
-					{
-						label: 'Humidity',
-						data: humidity_data,
-						fill: false,
-						borderColor: 'rgb(75, 192, 192)',
-						tension: 0.1
-					}
-				]
+		let myChart = new ApexCharts(node, options);
+		myChart.render();
+
+		return {
+			update(options) {
+				myChart.updateOptions(options);
+			},
+			destroy() {
+				myChart.destroy();
 			}
-		});
-	}
+		};
+	};
 
-	onMount(makeGraph);
+	onMount(async () => {
+		const module = await import('apexcharts');
+		ApexCharts = module.default;
+		window.ApexCharts = ApexCharts;
+		loaded = true;
+	});
 </script>
 
-<canvas id="myChart" height="100" />
+{#if loaded}
+	<div use:chart={options} />
+{/if}
