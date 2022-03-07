@@ -11,8 +11,7 @@
 			</label>
 			<input type="password" placeholder="password" class="input" />
 			<div class="flex flex-row">
-				<button class="btn btn-primary mt-4 mr-4" type="submit">Submit</button>
-				<button class="btn btn-secondary mt-4 mr-4" type="submit">Sm btn or smthn</button>
+				<a href="/dashboard" class="btn btn-primary mt-4 mr-4" type="submit">Submit (NCDED)</a>
 			</div>
 		</div>
 	</div>

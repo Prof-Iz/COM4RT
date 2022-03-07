@@ -62,7 +62,8 @@
 
 	let options = {
 		chart: {
-			type: 'line'
+			type: 'line',
+			background: 'bg-base-200'
 		},
 		series: [
 			{
@@ -91,87 +92,19 @@
 			}
 		],
 		theme: {
-			mode: 'light'
+			mode: 'dark'
 		}
 	};
 </script>
 
-<h1 class="md:text-5xl mx-5 mt-5 mb-6 text-xl">Data collected in DB for Device {params.id}</h1>
-<div class="flex h-screen justify-center">
-	<div class="md:w-2/3 w-full">
-		<Chart {options} />
+<div class="container mt-8 px-2 md:px-0 sm:mt-0 mx-auto h-max">
+	<h1 class="text-bold text-4xl sm:text-4xl mb-2">Office Buddy</h1>
+	<p class="text-bold text-lg mb-3">Block E lvl 4</p>
+	<div class="grid sm:grid-cols-2 grid-cols-1 justify-start">
+		<div class="flex justify-center">
+			<div class="w-full">
+				<Chart {options} />
+			</div>
+		</div>
 	</div>
 </div>
-<!-- <div class="flex w-100 px-5 justify-around">
-	<div class="flex-auto w-2/3">
-		<LineChart
-			data={chart_data}
-			options={{
-				title: 'Historical Data',
-				axes: {
-					bottom: {
-						title: 'Temperature vs Humidity',
-						mapsTo: 'date',
-						scaleType: 'time'
-					},
-					left: {
-						mapsTo: 'temp_value',
-						title: 'Temperature °C'
-					},
-					right: {
-						mapsTo: 'humidity_value',
-						title: 'Humidity %',
-						correspondingDatasets: ['Humidity']
-					}
-				},
-				curve: 'curveMonotoneX',
-				toolbar: {
-					enabled: true,
-					numberOfIcons: 2,
-					controls: [
-						{
-							type: 'Reset zoom'
-						},
-						{
-							type: 'Zoom in'
-						},
-						{
-							type: 'Zoom out'
-						}
-					]
-				},
-				zoomBar: {
-					top: {
-						enabled: true
-					}
-				},
-				height: '400px'
-			}}
-		/>
-	</div>
-	<div class="flex-auto w-1/3">
-		<h2>Some stuff</h2>
-	</div>
-</div> -->
-<!-- <div class="overflow-x-auto ">
-	<div id="myDiv" />
-
-	<table class="table w-full">
-		<thead>
-			<tr>
-				<th />
-				<th>Logged at</th>
-				<th>Temperature</th>
-				<th>Humidity</th>
-			</tr>
-		</thead>
-		{#each data['status'] as data_row}
-			<tr>
-				<th />
-				<td>{formatDate(data_row.logged_at)}</td>
-				<td>{data_row.temp}</td>
-				<td>{data_row.humidity}</td>
-			</tr>
-		{/each}
-	</table>
-</div> -->

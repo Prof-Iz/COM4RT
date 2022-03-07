@@ -20,7 +20,7 @@ export async function post(request) {
     if (error) {
         return {
             body: {
-                status: 400
+                status: "error"
             },
         }
     } else {
