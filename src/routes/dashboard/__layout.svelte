@@ -17,6 +17,14 @@
 			goto(url);
 		}
 	}
+
+	function logOut() {
+		console.log(is_browser);
+		if (is_browser) {
+			is_authenticated.set(false);
+			goto('/login');
+		}
+	}
 </script>
 
 {#if !$is_authenticated}
@@ -41,8 +49,12 @@
 						tabindex="0"
 						class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 					>
-						<li><a href="https://com4rtbuddy.wixsite.com/com4rt">Help</a></li>
-						<li><a href="/login">Logout</a></li>
+						<li>
+							<a class="btn btn-secondary mb-3" href="https://com4rtbuddy.wixsite.com/com4rt"
+								>Help</a
+							>
+						</li>
+						<li><btn class="btn btn-error" on:click|preventDefault={logOut}>Logout</btn></li>
 					</ul>
 				</div>
 			</div>
