@@ -15,9 +15,9 @@
 <script>
 	function formatDate(date) {
 		let d = new Date(date);
-		let utc = d.getTime() + d.getTimezoneOffset() * 60000;
-		let nd = new Date(utc + 3600000 * 8);
-		return nd.toLocaleString();
+		// let utc = d.getTime() + d.getTimezoneOffset() * 60000;
+		// let nd = new Date(utc + 3600000 * 8);
+		return d.toLocaleString();
 	}
 
 	export let data;
@@ -72,7 +72,10 @@
 			}
 		],
 		xaxis: {
-			type: 'datetime'
+			type: 'datetime',
+			labels: {
+				datetimeUTC: false
+			}
 		},
 		yaxis: [
 			{
