@@ -74,5 +74,4 @@ typings/
 
 # FuseBox cache
 .fusebox/
-
-.svelte-kit
+.svelte-kit/generated/manifest.js

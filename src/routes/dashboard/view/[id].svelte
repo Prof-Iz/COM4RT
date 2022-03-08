@@ -21,42 +21,38 @@
 	}
 
 	export let data;
-	export let params;
 
-	// let chart_data = [];
+	function calculateAverageOfArray(array) {
+		var total = 0;
+		var count = 0;
 
-	// for (let i = 0; i < data['status'].length; i++) {
-	// 	let temp_dic = {
-	// 		group: 'Temperature',
-	// 		date: data['status'][i].logged_at,
-	// 		temp_value: data['status'][i].temp
-	// 	};
+		array.forEach(function (item, index) {
+			total += item;
+			count++;
+		});
 
-	// 	let humidity_dic = {
-	// 		group: 'Humidity',
-	// 		date: data['status'][i].logged_at,
-	// 		humidity_value: data['status'][i].humidity
-	// 	};
-
-	// 	chart_data.push(temp_dic);
-	// 	chart_data.push(humidity_dic);
-	// }
+		return (total / count).toPrecision(3);
+	}
 
 	import Chart from '$lib/chart.svelte';
 
 	let data_temp = [];
 	let data_humidity = [];
+	let temperature_array = [],
+		humidity_array = [];
 
 	for (let i = 0; i < data['status'].length; i++) {
 		let temp_dic = {
 			y: data['status'][i].temp,
 			x: formatDate(data['status'][i].logged_at)
 		};
+		temperature_array.push(data['status'][i].temp);
 		data_temp.push(temp_dic);
 		temp_dic = {
 			y: data['status'][i].humidity,
 			x: formatDate(data['status'][i].logged_at)
 		};
+		humidity_array.push(data['status'][i].humidity);
 		data_humidity.push(temp_dic);
 	}
 
@@ -82,13 +78,17 @@
 			{
 				title: {
 					text: 'Temperature °C'
-				}
+				},
+				min: Math.min(...temperature_array) - 3,
+				max: Math.max(...temperature_array) + 3
 			},
 			{
 				opposite: true,
 				title: {
 					text: 'Humidity %'
-				}
+				},
+				min: Math.min(...humidity_array) - 3,
+				max: Math.max(...humidity_array) + 3
 			}
 		],
 		theme: {
@@ -100,10 +100,54 @@
 <div class="container mt-8 px-2 md:px-0 sm:mt-0 mx-auto h-max">
 	<h1 class="text-bold text-4xl sm:text-4xl mb-2">Office Buddy</h1>
 	<p class="text-bold text-lg mb-3">Block E lvl 4</p>
-	<div class="grid sm:grid-cols-2 grid-cols-1 justify-start">
+	<div class="grid sm:grid-cols-2 grid-cols-1 justify-start gap-x-5">
 		<div class="flex justify-center">
 			<div class="w-full">
 				<Chart {options} />
+			</div>
+		</div>
+		<div>
+			<div class="stats shadow stats-vertical mb-5 mx-auto">
+				<div class="stat">
+					<div class="stat-title">💧 Avg</div>
+					<div class="stat-value">
+						{calculateAverageOfArray(humidity_array)} <small>%</small>
+					</div>
+					<div class="stat-desc">Average Humidity</div>
+				</div>
+
+				<div class="stat ">
+					<div class="stat-title">💧 Min</div>
+					<div class="stat-value">{Math.min(...humidity_array)} <small>%</small></div>
+					<div class="stat-desc">Lowest Recorded</div>
+				</div>
+
+				<div class="stat ">
+					<div class="stat-title">💧 Max</div>
+					<div class="stat-value">{Math.max(...humidity_array)} <small>%</small></div>
+					<div class="stat-desc">Highest Recorded</div>
+				</div>
+			</div>
+			<div class="stats shadow stats-vertical">
+				<div class="stat">
+					<div class="stat-title">🌡Avg</div>
+					<div class="stat-value">
+						{calculateAverageOfArray(temperature_array)} <small>°C</small>
+					</div>
+					<div class="stat-desc">Average Temperature</div>
+				</div>
+
+				<div class="stat ">
+					<div class="stat-title">🌡Min</div>
+					<div class="stat-value">{Math.min(...temperature_array)} <small>°C</small></div>
+					<div class="stat-desc">Lowest Recorded</div>
+				</div>
+
+				<div class="stat ">
+					<div class="stat-title">🌡Max</div>
+					<div class="stat-value">{Math.max(...temperature_array)} <small>°C</small></div>
+					<div class="stat-desc">Highest Recorded</div>
+				</div>
 			</div>
 		</div>
 	</div>

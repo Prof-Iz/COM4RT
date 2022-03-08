@@ -1,4 +1,5 @@
 <script>
+	import EditModal from '$lib/editModal.svelte';
 </script>
 
 <div class="container mx-auto mt-5 sm:mt-20 h-2/3">
@@ -32,6 +33,7 @@
 					</td>
 					<th>
 						<a href="/dashboard/view/QWERTY" class="btn btn-ghost btn-xs">details</a>
+						<EditModal device_id={'QWERTY'} name={'Office Buddy'} loc={'UCSI'} type={'V1'} />
 					</th>
 				</tr>
 				<!-- row 1 -->
@@ -51,7 +53,8 @@
 						<span class="badge badge-primary badge-sm">ZXCVBN</span>
 					</td>
 					<th>
-						<a href="/dashboard/view/QWERTY" class="btn btn-ghost btn-xs">details</a>
+						<a href="/dashboard/view/ZXCVBN" class="btn btn-ghost btn-xs">details</a>
+						<EditModal device_id={'ZXCVBN'} name={'HOMIE at Home'} loc={'Angkasa'} type={'V1'} />
 					</th>
 				</tr>
 			</tbody>

@@ -19,7 +19,7 @@
 					tabindex="0"
 					class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 				>
-					<li><a href="google.com">Help</a></li>
+					<li><a href="https://com4rtbuddy.wixsite.com/com4rt">Help</a></li>
 					<li><a href="/login">Logout</a></li>
 				</ul>
 			</div>

@@ -48,7 +48,7 @@
 			<h2 class="card-title">HALP!</h2>
 			<p>Stuck bro? Let us help you out</p>
 			<div class="card-actions justify-center">
-				<a href=" " class="btn btn-alert w-2/3">Get Help</a>
+				<a href="https://com4rtbuddy.wixsite.com/com4rt" class="btn btn-alert w-2/3">Get Help</a>
 			</div>
 		</div>
 	</div>
