@@ -54,7 +54,7 @@
 								device_id={buddy.device_id}
 								name={buddy.name}
 								loc={buddy.location}
-								type={'V1'}
+								type={`V${buddy.version}`}
 							/>
 						</th>
 					</tr>
