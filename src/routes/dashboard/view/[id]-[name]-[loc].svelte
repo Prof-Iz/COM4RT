@@ -21,6 +21,7 @@
 	}
 
 	export let data;
+	export let params;
 
 	function calculateAverageOfArray(array) {
 		var total = 0;
@@ -101,8 +102,8 @@
 </script>
 
 <div class="container mt-8 px-2 md:px-0 sm:mt-0 mx-auto h-max">
-	<h1 class="text-bold text-4xl sm:text-4xl mb-2">Office Buddy</h1>
-	<p class="text-bold text-lg mb-3">Block E lvl 4</p>
+	<h1 class="text-bold text-4xl sm:text-4xl mb-2">{params.name}</h1>
+	<p class="text-bold text-lg mb-3">{params.loc}</p>
 	<div class="grid sm:grid-cols-2 grid-cols-1 justify-start gap-x-5">
 		<div class="flex justify-center">
 			<div class="w-full">

@@ -28,8 +28,8 @@
 					<span>Buddy Version</span>
 					<select class="select select-bordered">
 						<option disabled selected>{type}</option>
-						<option>MVP</option>
-						<option>V1</option>
+						<option>0</option>
+						<option>1</option>
 					</select>
 				</label>
 			</div>

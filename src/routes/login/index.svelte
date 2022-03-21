@@ -6,7 +6,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
 
-	import is_authenticated from '$lib/stores/stores';
+	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 
 	$: if (browser) {
 		is_browser = true;
@@ -14,13 +14,26 @@
 		is_browser = false;
 	}
 
-	function logIn(href, email, password) {
-		console.log(is_browser);
-		if (is_browser) {
-			if (email == 'waising@gmail.com' && password == '1234') {
-				is_authenticated.set(true);
-				goto(href);
+	async function logIn() {
+		const submit = await fetch('./login.json', {
+			method: 'POST',
+			body: JSON.stringify({ email, password }),
+			headers: {
+				'Content-Type': 'application/json'
 			}
+		});
+
+		const submitData = await submit.json();
+
+		if (submitData.status == 'error') {
+			alert('Wrong Email or Password! Try again.');
+			return;
+		}
+		console.log(submitData);
+
+		if (is_browser) {
+			window.sessionStorage.setItem('user', submitData);
+			user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 		}
 	}
 
@@ -31,16 +44,17 @@
 	}
 </script>
 
-{#if $is_authenticated}
+{#if user}
 	{redirect('/dashboard')}
-{/if}
-
-{#if !$is_authenticated}
+{:else}
 	<div class="m-10 flex flex-col items-center">
 		<!-- 1st value chg txt size, second value chg height -->
 		<h1 class="text-5xl text-cyan mb-3 sm:mb-5 text-bold">Log In</h1>
 		<!-- position, background, width, purple is set at tailwind.config.cjs file -->
-		<div class="p-12 card bg-purple lg:l max-w-lg md:w-full max-w-lg sm:w-full max-w-lg">
+		<form
+			on:submit|preventDefault={logIn}
+			class="p-12 card bg-purple lg:l max-w-lg md:w-full max-w-lg sm:w-full max-w-lg"
+		>
 			<div class="form-control" w-full max-w-lg>
 				<label class="label">
 					<!-- text-xl, set it to large size -->
@@ -74,7 +88,8 @@
 				<div class="flex w-full justify-center">
 					<!-- CHANGE TO FORM -->
 					<button
-						on:click|preventDefault={logIn('/dashboard', email, password)}
+						type="submit"
+						on:click|preventDefault={logIn}
 						class="btn btn-primary mb-5 xs:btn-xs w-15 sm:btn-md w-15 md:btn-md w-15 lg:btn-md w-60"
 						>Submit
 					</button>
@@ -85,6 +100,6 @@
 					<a href="/signup" class="link link-primary ml-1">Sign-Up</a>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 {/if}

@@ -1,9 +1,9 @@
 <script>
 	import '../../tailwind.css';
-	import is_authenticated from '$lib/stores/stores';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
 
+	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 	let is_browser = false;
 
 	$: if (browser) {
@@ -19,19 +19,15 @@
 	}
 
 	function logOut() {
-		console.log(is_browser);
 		if (is_browser) {
-			is_authenticated.set(false);
+			window.sessionStorage.setItem('user', '');
+			user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 			goto('/login');
 		}
 	}
 </script>
 
-{#if !$is_authenticated}
-	{redirect('/login')}
-{/if}
-
-{#if $is_authenticated}
+{#if user}
 	<div class="mx-auto pt-3 md:pt-5 md:px-10 px-3 justify-center bg-base-300 min-h-screen h-max">
 		<div class="navbar bg-base-100 sm:mb-10 shadow-xl rounded-box ">
 			<div class="flex-1">
@@ -62,4 +58,6 @@
 
 		<slot />
 	</div>
+{:else}
+	{redirect('/login')}
 {/if}
