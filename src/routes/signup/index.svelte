@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
 
-	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
+	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 
 	$: if (browser) {
 		is_browser = true;

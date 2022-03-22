@@ -5,9 +5,7 @@
 
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
-	import { user_auth } from '$lib/stores/auth';
-
-	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
+	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 
 	$: if (browser) {
 		is_browser = true;
@@ -25,18 +23,17 @@
 		});
 
 		const submitData = await submit.json();
+		console.log(submitData);
 
 		if (submitData.status == 'error') {
 			alert('Wrong Email or Password! Try again.');
 			return;
 		}
-		console.log(submitData);
-		user_auth.set(submitData.user);
 
 		if (is_browser) {
-			window.sessionStorage.setItem('user', submitData);
-			user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
+			window.localStorage.setItem('user', JSON.stringify(submitData));
 		}
+		user = browser ? window.localStorage.getItem('user') ?? '' : '';
 	}
 
 	function redirect(url) {

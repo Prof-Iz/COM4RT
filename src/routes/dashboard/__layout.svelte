@@ -3,10 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
 
-	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
+	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 	let is_browser = false;
 
-	import { user_auth } from '$lib/stores/auth';
+	console.log(Object.values(user));
 
 	$: if (browser) {
 		is_browser = true;
@@ -22,8 +22,7 @@
 
 	function logOut() {
 		if (is_browser) {
-			window.sessionStorage.setItem('user', '');
-			user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
+			window.localStorage.clear();
 			goto('/login');
 		}
 	}
@@ -36,11 +35,11 @@
 				<a href="/dashboard" class="btn btn-ghost normal-case text-xl">COM4RT PORTAL</a>
 			</div>
 			<div class="flex-none">
-				<p class="px-2">{$user_auth.email}</p>
+				<p class="md:visible invisible px-2">{JSON.parse(user).user.email}</p>
 				<div class="dropdown dropdown-end">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar placeholder bg-[#f87ad2]">
-						<div class="w-10 rounded-full ">
+						<div class="md:w-10 w-5 rounded-full ">
 							<i class="fas fa-user" />
 						</div>
 					</label>
