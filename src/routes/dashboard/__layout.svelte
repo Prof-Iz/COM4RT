@@ -6,6 +6,8 @@
 	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 	let is_browser = false;
 
+	import { user_auth } from '$lib/stores/auth';
+
 	$: if (browser) {
 		is_browser = true;
 	} else {
@@ -34,11 +36,12 @@
 				<a href="/dashboard" class="btn btn-ghost normal-case text-xl">COM4RT PORTAL</a>
 			</div>
 			<div class="flex-none">
+				<p class="px-2">{$user_auth.email}</p>
 				<div class="dropdown dropdown-end">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar placeholder bg-[#f87ad2]">
 						<div class="w-10 rounded-full ">
-							<p class="text-[#000000]">USR</p>
+							<i class="fas fa-user" />
 						</div>
 					</label>
 					<ul

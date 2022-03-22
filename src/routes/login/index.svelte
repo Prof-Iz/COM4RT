@@ -5,6 +5,7 @@
 
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
+	import { user_auth } from '$lib/stores/auth';
 
 	let user = browser ? window.sessionStorage.getItem('user') ?? '' : '';
 
@@ -30,6 +31,7 @@
 			return;
 		}
 		console.log(submitData);
+		user_auth.set(submitData.user);
 
 		if (is_browser) {
 			window.sessionStorage.setItem('user', submitData);
