@@ -6,7 +6,9 @@ export async function post(request) {
 
     let json = request.body;
 
-    const { data, error } = await supabase
+
+
+    const { error } = await supabase
         .from('test_log')
         .insert([
             {

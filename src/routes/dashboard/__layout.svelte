@@ -6,8 +6,6 @@
 	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 	let is_browser = false;
 
-	console.log(Object.values(user));
-
 	$: if (browser) {
 		is_browser = true;
 	} else {
@@ -35,7 +33,7 @@
 				<a href="/dashboard" class="btn btn-ghost normal-case text-xl">COM4RT PORTAL</a>
 			</div>
 			<div class="flex-none">
-				<p class="md:visible invisible px-2">{JSON.parse(user).user.email}</p>
+				<p class="md:visible invisible pr-2">{JSON.parse(user).user.email}</p>
 				<div class="dropdown dropdown-end">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar placeholder bg-[#f87ad2]">
