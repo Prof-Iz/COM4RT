@@ -1,3 +1,16 @@
+<script context="module">
+	export const load = async ({ fetch }) => {
+		const res = await fetch('/dashboard/view.json');
+		const data = await res.json();
+
+		return {
+			props: {
+				data
+			}
+		};
+	};
+</script>
+
 <script>
 	import '../../tailwind.css';
 	import { goto } from '$app/navigation';
@@ -18,7 +31,13 @@
 		}
 	}
 
-	function logOut() {
+	async function logOut() {
+		const error = await fetch('/logout.json', {
+			method: 'GET'
+		});
+
+		if (error) console.log(error);
+
 		if (is_browser) {
 			window.localStorage.clear();
 			goto('/login');

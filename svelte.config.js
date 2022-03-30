@@ -13,6 +13,7 @@ const config = {
 			optimizeDeps: {
 				include: ['svelte-apexcharts', 'apexcharts'],
 			},
+
 			// ssr: {
 			// 	noExternal: [production && '@svelte-apexcharts'].filter(Boolean),
 			// },

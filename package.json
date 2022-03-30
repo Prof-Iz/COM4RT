@@ -27,6 +27,7 @@
     "@supabase/supabase-js": "^1.30.4",
     "@supercharge/strings": "^1.25.0",
     "apexcharts": "^3.33.2",
+    "cookie": "^0.4.2",
     "daisyui": "^1.25.3",
     "dotenv": "^16.0.0",
     "mathjs": "^10.4.0",

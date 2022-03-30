@@ -5,6 +5,7 @@
 
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/env';
+	import { session } from '$app/stores';
 	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 
 	$: if (browser) {
@@ -23,7 +24,6 @@
 		});
 
 		const submitData = await submit.json();
-		console.log(submitData);
 
 		if (submitData.status == 'error') {
 			alert('Wrong Email or Password! Try again.');

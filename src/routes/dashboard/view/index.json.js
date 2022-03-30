@@ -1,8 +1,11 @@
 import supabase from "$lib/db"
+import cookie from 'cookie';
 
 // Fetch data given device ID
 
 export async function get() {
+
+
 
     let { data: device_detail, error } = await supabase
         .from('device_detail')
