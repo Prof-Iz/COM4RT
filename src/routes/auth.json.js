@@ -1,5 +1,5 @@
 import { expressifyResp, deExpressifyResp } from '$lib/express-utils';
-import supabase from '$lib/supabase';
+import supabase from '$lib/db';
 
 export const post = async (request) => {
     let response = { status: 200, body: {}, headers: {} };
