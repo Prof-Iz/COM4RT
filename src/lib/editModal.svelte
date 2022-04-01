@@ -65,8 +65,7 @@
 				</label>
 				<label class="input-group">
 					<span>Buddy Version</span>
-					<select class="select select-bordered" bind:value={type}>
-						<option disabled selected>{type}</option>
+					<select class="select select-bordered" bind:value={type} placeholder={type}>
 						<option>0</option>
 						<option>1</option>
 					</select>
@@ -80,6 +79,7 @@
 				<label for="modal-{device_id}" class="btn btn-warning" on:click={deleteDevice}>
 					DELETE
 				</label>
+				<label for="modal-{device_id}" class="btn btn-primary"> NO CHANGE </label>
 			</div>
 		</div>
 	</div>
