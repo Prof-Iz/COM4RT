@@ -20,7 +20,6 @@
 			return;
 		}
 
-		console.log(submitData);
 		return submit;
 	}
 </script>
