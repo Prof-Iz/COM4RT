@@ -32,7 +32,7 @@
 	}
 
 	async function logOut() {
-		const error = await fetch('/logout.json', {
+		const error = await fetch('/api/logout.json', {
 			method: 'GET'
 		});
 

@@ -1,11 +1,10 @@
 import supabase from "$lib/db"
 
-// Log data when sent by an Arduino PUT REQ
+// Log data when sent by an Arduino POST REQ
 
 export async function post(request) {
 
     let json = request.body;
-
 
 
     const { error } = await supabase
@@ -14,22 +13,24 @@ export async function post(request) {
             {
                 device_id: json['device_id'],
                 temp: json.temp,
-                humidity: json.humidity
+                humidity: json.humidity,
+                owner_email: json.email
             },
         ])
 
 
     if (error) {
         return {
+            status: 400,
             body: {
-                status: "error"
+                error
+
             },
         }
     } else {
         return {
-            body: {
-                status: 200
-            }
+            status: 200,
+
         }
     }
 }

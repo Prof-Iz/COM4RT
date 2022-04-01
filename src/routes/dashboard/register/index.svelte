@@ -1,10 +1,13 @@
 <script>
 	export let name, location, type;
+	import { browser } from '$app/env';
+	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 
+	let email = JSON.parse(user).user.email;
 	async function register() {
 		const submit = await fetch('/dashboard/register.json', {
 			method: 'POST',
-			body: JSON.stringify({ name, location, type }),
+			body: JSON.stringify({ name, location, type, email }),
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -12,12 +15,12 @@
 
 		const submitData = await submit.json();
 
-		if (submitData.status == 'error') {
+		if (submitData.status == 400) {
 			alert('Unable to Register a new buddy');
 			return;
 		}
 
-		console.log(submit);
+		console.log(submitData);
 		return submit;
 	}
 </script>
