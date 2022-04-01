@@ -1,7 +1,9 @@
 <script>
 	export let name, location, type;
 	import { browser } from '$app/env';
+	import { goto } from '$app/navigation';
 	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
+	let latest_UID;
 
 	let email = JSON.parse(user).user.email;
 	async function register() {
@@ -20,7 +22,14 @@
 			return;
 		}
 
-		return submit;
+		console.log(submitData);
+		latest_UID = submitData.data[0].device_id;
+	}
+
+	function redirect(url) {
+		if (browser) {
+			goto(url);
+		}
 	}
 </script>
 
@@ -41,7 +50,7 @@
 			<input
 				type="text"
 				bind:value={location}
-				placeholder="ex: COM4RT A"
+				placeholder="ex: My House or Office"
 				class="input input-bordered"
 			/>
 		</label>
@@ -61,10 +70,17 @@
 	<input type="checkbox" id="my-modal" class="modal-toggle" />
 	<div class="modal">
 		<div class="modal-box">
-			<h3 class="font-bold text-lg mb-2">Device Registered with</h3>
+			<h3 class="font-bold text-lg mb-2">Device Registered with ID</h3>
+			<h2 class="font-bold text-5xl mb-2">{latest_UID}</h2>
 			<p>Please use the code while setting up your Buddy</p>
 			<div class="modal-action">
-				<label for="my-modal" class="btn btn-secondary">Go Setup</label>
+				<label
+					for="my-modal"
+					class="btn btn-secondary"
+					on:click={() => {
+						redirect('/dashboard/view');
+					}}>Go Setup</label
+				>
 			</div>
 		</div>
 	</div>
