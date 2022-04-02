@@ -10,7 +10,7 @@ export const get = async (request) => {
 
     return {
         headers: {
-            'set-cookie': 'access_token=deleted; path=/login; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+            'set-cookie': 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure;SameSite=Strict;'
         },
         body: {
             error

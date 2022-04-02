@@ -13,6 +13,21 @@
 </script>
 
 <script>
+	import { writable } from 'svelte/store';
+	import supabase from '$lib/db';
+
+	export let data;
+	export let params;
+
+	const subscription = supabase
+		.from(`test_log:device_id=eq.${params.id}`)
+		.on('INSERT', (payload) => {
+			console.log('Change received!', payload);
+		})
+		.subscribe();
+
+	console.log(subscription);
+
 	function formatDate(date) {
 		let d = new Date(date);
 		// let utc = d.getTime() + d.getTimezoneOffset() * 60000;
@@ -20,9 +35,7 @@
 		return d.toLocaleString();
 	}
 
-	export let data;
-	export let params;
-
+	// Function to calculate average of array temperature and humidity
 	function calculateAverageOfArray(array) {
 		var total = 0;
 		var count = 0;
@@ -37,24 +50,43 @@
 
 	import Chart from '$lib/chart.svelte';
 
-	let data_temp = [];
-	let data_humidity = [];
-	let temperature_array = [],
-		humidity_array = [];
+	let data_temp = writable([]);
 
-	for (let i = 0; i < data['status'].length; i++) {
+	let data_humidity = writable([]);
+
+	let temperature_array = writable([]),
+		humidity_array = writable([]);
+
+	for (let i = 0; i < data.points.length; i++) {
 		let temp_dic = {
-			y: data['status'][i].temp,
-			x: formatDate(data['status'][i].logged_at)
+			y: data.points[i].temp,
+			x: formatDate(data.points[i].logged_at)
 		};
-		temperature_array.push(data['status'][i].temp);
-		data_temp.push(temp_dic);
+
+		temperature_array.update((n) => {
+			n.push(data.points[i].temp);
+			return n;
+		});
+
+		data_temp.update((n) => {
+			n.push(temp_dic);
+			return n;
+		});
+
 		temp_dic = {
-			y: data['status'][i].humidity,
-			x: formatDate(data['status'][i].logged_at)
+			y: data.points[i].humidity,
+			x: formatDate(data.points[i].logged_at)
 		};
-		humidity_array.push(data['status'][i].humidity);
-		data_humidity.push(temp_dic);
+
+		humidity_array.update((n) => {
+			n.push(data.points[i].humidity);
+			return n;
+		});
+
+		data_humidity.update((n) => {
+			n.push(temp_dic);
+			return n;
+		});
 	}
 
 	let options = {
@@ -65,11 +97,11 @@
 		series: [
 			{
 				name: 'Temperature',
-				data: data_temp
+				data: $data_temp
 			},
 			{
 				name: 'Humidity',
-				data: data_humidity
+				data: $data_humidity
 			}
 		],
 		xaxis: {
@@ -83,16 +115,16 @@
 				title: {
 					text: 'Temperature °C'
 				},
-				min: Math.min(...temperature_array) - 3,
-				max: Math.max(...temperature_array) + 3
+				min: Math.min(...$temperature_array) - 3,
+				max: Math.max(...$temperature_array) + 3
 			},
 			{
 				opposite: true,
 				title: {
 					text: 'Humidity %'
 				},
-				min: Math.min(...humidity_array) - 3,
-				max: Math.max(...humidity_array) + 3
+				min: Math.min(...$humidity_array) - 3,
+				max: Math.max(...$humidity_array) + 3
 			}
 		],
 		theme: {
@@ -115,20 +147,20 @@
 				<div class="stat">
 					<div class="stat-title">💧 Avg</div>
 					<div class="stat-value">
-						{calculateAverageOfArray(humidity_array)} <small>%</small>
+						{calculateAverageOfArray($humidity_array)} <small>%</small>
 					</div>
 					<div class="stat-desc">Average Humidity</div>
 				</div>
 
 				<div class="stat ">
 					<div class="stat-title">💧 Min</div>
-					<div class="stat-value">{Math.min(...humidity_array)} <small>%</small></div>
+					<div class="stat-value">{Math.min(...$humidity_array)} <small>%</small></div>
 					<div class="stat-desc">Lowest Recorded</div>
 				</div>
 
 				<div class="stat ">
 					<div class="stat-title">💧 Max</div>
-					<div class="stat-value">{Math.max(...humidity_array)} <small>%</small></div>
+					<div class="stat-value">{Math.max(...$humidity_array)} <small>%</small></div>
 					<div class="stat-desc">Highest Recorded</div>
 				</div>
 			</div>
@@ -136,20 +168,20 @@
 				<div class="stat">
 					<div class="stat-title">🌡Avg</div>
 					<div class="stat-value">
-						{calculateAverageOfArray(temperature_array)} <small>°C</small>
+						{calculateAverageOfArray($temperature_array)} <small>°C</small>
 					</div>
 					<div class="stat-desc">Average Temperature</div>
 				</div>
 
 				<div class="stat ">
 					<div class="stat-title">🌡Min</div>
-					<div class="stat-value">{Math.min(...temperature_array)} <small>°C</small></div>
+					<div class="stat-value">{Math.min(...$temperature_array)} <small>°C</small></div>
 					<div class="stat-desc">Lowest Recorded</div>
 				</div>
 
 				<div class="stat ">
 					<div class="stat-title">🌡Max</div>
-					<div class="stat-value">{Math.max(...temperature_array)} <small>°C</small></div>
+					<div class="stat-value">{Math.max(...$temperature_array)} <small>°C</small></div>
 					<div class="stat-desc">Highest Recorded</div>
 				</div>
 			</div>

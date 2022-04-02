@@ -1,5 +1,6 @@
 import supabase from "$lib/db"
 
+
 // Fetch data given device ID
 
 export async function get({ params }) {
@@ -15,14 +16,13 @@ export async function get({ params }) {
 
     if (error) {
         return {
-            body: {
-                status: 400
-            },
+            status: 400,
         }
     } else {
         return {
+            status: 200,
             body: {
-                status: test_log
+                points: test_log
             }
         }
     }
