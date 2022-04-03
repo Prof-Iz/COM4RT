@@ -3,24 +3,31 @@
 
 	export let options;
 
+	options = options;
+
 	let ApexCharts;
 	let loaded = false;
+	let chart;
 
-	const chart = (node, options) => {
-		if (!loaded) return;
+	function remakeChart(options) {
+		chart = (node, options) => {
+			if (!loaded) return;
 
-		let myChart = new ApexCharts(node, options);
-		myChart.render();
+			let myChart = new ApexCharts(node, options);
+			myChart.render();
 
-		return {
-			update(options) {
-				myChart.updateOptions(options);
-			},
-			destroy() {
-				myChart.destroy();
-			}
+			return {
+				update(options) {
+					myChart.updateOptions(options);
+				},
+				destroy() {
+					myChart.destroy();
+				}
+			};
 		};
-	};
+	}
+
+	$: remakeChart(options);
 
 	onMount(async () => {
 		const module = await import('apexcharts');

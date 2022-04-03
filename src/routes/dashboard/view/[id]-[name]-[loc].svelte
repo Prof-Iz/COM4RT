@@ -14,25 +14,62 @@
 
 <script>
 	import { writable } from 'svelte/store';
-	import supabase from '$lib/db';
+	import { navigating } from '$app/stores';
 
 	export let data;
 	export let params;
 
-	const subscription = supabase
-		.from(`test_log:device_id=eq.${params.id}`)
-		.on('INSERT', (payload) => {
-			console.log('Change received!', payload);
-		})
-		.subscribe();
-
-	console.log(subscription);
+	let options;
 
 	function formatDate(date) {
 		let d = new Date(date);
 		// let utc = d.getTime() + d.getTimezoneOffset() * 60000;
 		// let nd = new Date(utc + 3600000 * 8);
 		return d.toLocaleString();
+	}
+
+	async function refetchData() {
+		const res = await fetch(`/api/view/update-${params.id}.json`);
+		const data = await res.json();
+		if (data.points.length > 0) {
+			let temp_dic = {
+				y: data.points[0].temp,
+				x: formatDate(data.points[0].logged_at)
+			};
+
+			if (temp_dic.x != $data_temp[$data_temp.length - 1].x) {
+				temperature_array.update((n) => {
+					n.push(data.points[0].temp);
+					return n;
+				});
+
+				data_temp.update((n) => {
+					n.push(temp_dic);
+					return n;
+				});
+
+				temp_dic = {
+					y: data.points[0].humidity,
+					x: formatDate(data.points[0].logged_at)
+				};
+
+				humidity_array.update((n) => {
+					n.push(data.points[0].humidity);
+					return n;
+				});
+
+				data_humidity.update((n) => {
+					n.push(temp_dic);
+					return n;
+				});
+			}
+		}
+	}
+
+	let update_data = setInterval(refetchData, 10000);
+
+	$: if ($navigating) {
+		clearInterval(update_data);
 	}
 
 	// Function to calculate average of array temperature and humidity
@@ -89,10 +126,14 @@
 		});
 	}
 
-	let options = {
+	$: options = {
 		chart: {
 			type: 'line',
 			background: 'bg-base-200'
+		},
+		colors: ['#FF8080', '#00E6E6'],
+		stroke: {
+			curve: 'smooth'
 		},
 		series: [
 			{

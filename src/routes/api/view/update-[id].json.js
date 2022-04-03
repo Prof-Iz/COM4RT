@@ -10,7 +10,9 @@ export async function get({ params }) {
     let { data: test_log, error } = await supabase
         .from('test_log')
         .select('logged_at,temp,humidity')
+        .order('id', { ascending: false })
         .eq('device_id', device_id)
+        .limit(1)
 
 
     if (error) {
