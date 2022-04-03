@@ -183,49 +183,39 @@
 				<Chart {options} />
 			</div>
 		</div>
-		<div>
-			<div class="stats shadow stats-vertical mb-5 mx-auto">
-				<div class="stat">
-					<div class="stat-title">💧 Avg</div>
-					<div class="stat-value">
-						{calculateAverageOfArray($humidity_array)} <small>%</small>
-					</div>
-					<div class="stat-desc">Average Humidity</div>
-				</div>
 
-				<div class="stat ">
-					<div class="stat-title">💧 Min</div>
-					<div class="stat-value">{Math.min(...$humidity_array)} <small>%</small></div>
-					<div class="stat-desc">Lowest Recorded</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">💧 Max</div>
-					<div class="stat-value">{Math.max(...$humidity_array)} <small>%</small></div>
-					<div class="stat-desc">Highest Recorded</div>
-				</div>
-			</div>
-			<div class="stats shadow stats-vertical">
-				<div class="stat">
-					<div class="stat-title">🌡Avg</div>
-					<div class="stat-value">
-						{calculateAverageOfArray($temperature_array)} <small>°C</small>
-					</div>
-					<div class="stat-desc">Average Temperature</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">🌡Min</div>
-					<div class="stat-value">{Math.min(...$temperature_array)} <small>°C</small></div>
-					<div class="stat-desc">Lowest Recorded</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">🌡Max</div>
-					<div class="stat-value">{Math.max(...$temperature_array)} <small>°C</small></div>
-					<div class="stat-desc">Highest Recorded</div>
-				</div>
-			</div>
+		<div class="overflow-x-auto">
+			<table class="table w-full">
+				<!-- head -->
+				<thead>
+					<tr>
+						<th />
+						<th>Stat</th>
+						<th>Latest</th>
+						<th>Max</th>
+						<th>Min</th>
+						<th>Average</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="hover">
+						<th>🌡</th>
+						<td>Temperature</td>
+						<td>{$temperature_array[$temperature_array.length - 1]} °C</td>
+						<td>{Math.max(...$temperature_array)} °C</td>
+						<td>{Math.min(...$temperature_array)} °C</td>
+						<td>{calculateAverageOfArray($temperature_array)} °C</td>
+					</tr>
+					<tr class="hover">
+						<th>💧</th>
+						<td>Humidity</td>
+						<td>{$humidity_array[$humidity_array.length - 1]} %</td>
+						<td>{Math.max(...$humidity_array)} %</td>
+						<td>{Math.min(...$humidity_array)} %</td>
+						<td>{calculateAverageOfArray($humidity_array)} %</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
