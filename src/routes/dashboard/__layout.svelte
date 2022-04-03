@@ -32,7 +32,7 @@
 	}
 
 	async function logOut() {
-		const error = await fetch('/logout.json', {
+		const error = await fetch('/api/logout.json', {
 			method: 'GET'
 		});
 
@@ -52,7 +52,7 @@
 				<a href="/dashboard" class="btn btn-ghost normal-case text-xl">COM4RT PORTAL</a>
 			</div>
 			<div class="flex-none">
-				<p class="md:visible invisible pr-2">{JSON.parse(user).user.email}</p>
+				<p class="md:visible invisible pr-2">{JSON.parse(user)}</p>
 				<div class="dropdown dropdown-end">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label tabindex="0" class="btn btn-ghost btn-circle avatar placeholder bg-[#f87ad2]">

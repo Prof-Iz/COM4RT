@@ -31,7 +31,7 @@
 		}
 
 		if (is_browser) {
-			window.localStorage.setItem('user', JSON.stringify(submitData));
+			window.localStorage.setItem('user', JSON.stringify(submitData.user.email));
 		}
 		user = browser ? window.localStorage.getItem('user') ?? '' : '';
 	}
@@ -76,15 +76,15 @@
 					class="input input-bordered input-primary input-md w-full max-w-lg"
 				/>
 
-				<a class="link link-primary ml-1 text-xs">Forgot Password</a>
+				<!-- <a class="link link-primary ml-1 text-xs">Forgot Password</a>
 
 				<div class="flex w-full">
 					<input type="checkbox" checked="checked" class="checkbox checkbox-sm mt-2 ml-1" />
 					<div class="divider divider-horizontal" />
 					<a class="text mt-1 ml-1">Remember me</a>
-				</div>
+				</div> -->
 
-				<div class="flex w-full justify-center">
+				<div class="flex w-full justify-center mt-5">
 					<!-- CHANGE TO FORM -->
 					<button
 						type="submit"

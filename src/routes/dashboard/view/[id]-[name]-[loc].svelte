@@ -13,6 +13,14 @@
 </script>
 
 <script>
+	import { writable } from 'svelte/store';
+	import { navigating } from '$app/stores';
+
+	export let data;
+	export let params;
+
+	let options;
+
 	function formatDate(date) {
 		let d = new Date(date);
 		// let utc = d.getTime() + d.getTimezoneOffset() * 60000;
@@ -20,9 +28,51 @@
 		return d.toLocaleString();
 	}
 
-	export let data;
-	export let params;
+	async function refetchData() {
+		const res = await fetch(`/api/view/update-${params.id}.json`);
+		const data = await res.json();
+		if (data.points.length > 0) {
+			let temp_dic = {
+				y: data.points[0].temp,
+				x: formatDate(data.points[0].logged_at)
+			};
 
+			if (temp_dic.x != $data_temp[$data_temp.length - 1].x) {
+				temperature_array.update((n) => {
+					n.push(data.points[0].temp);
+					return n;
+				});
+
+				data_temp.update((n) => {
+					n.push(temp_dic);
+					return n;
+				});
+
+				temp_dic = {
+					y: data.points[0].humidity,
+					x: formatDate(data.points[0].logged_at)
+				};
+
+				humidity_array.update((n) => {
+					n.push(data.points[0].humidity);
+					return n;
+				});
+
+				data_humidity.update((n) => {
+					n.push(temp_dic);
+					return n;
+				});
+			}
+		}
+	}
+
+	let update_data = setInterval(refetchData, 10000);
+
+	$: if ($navigating) {
+		clearInterval(update_data);
+	}
+
+	// Function to calculate average of array temperature and humidity
 	function calculateAverageOfArray(array) {
 		var total = 0;
 		var count = 0;
@@ -37,39 +87,62 @@
 
 	import Chart from '$lib/chart.svelte';
 
-	let data_temp = [];
-	let data_humidity = [];
-	let temperature_array = [],
-		humidity_array = [];
+	let data_temp = writable([]);
 
-	for (let i = 0; i < data['status'].length; i++) {
+	let data_humidity = writable([]);
+
+	let temperature_array = writable([]),
+		humidity_array = writable([]);
+
+	for (let i = 0; i < data.points.length; i++) {
 		let temp_dic = {
-			y: data['status'][i].temp,
-			x: formatDate(data['status'][i].logged_at)
+			y: data.points[i].temp,
+			x: formatDate(data.points[i].logged_at)
 		};
-		temperature_array.push(data['status'][i].temp);
-		data_temp.push(temp_dic);
+
+		temperature_array.update((n) => {
+			n.push(data.points[i].temp);
+			return n;
+		});
+
+		data_temp.update((n) => {
+			n.push(temp_dic);
+			return n;
+		});
+
 		temp_dic = {
-			y: data['status'][i].humidity,
-			x: formatDate(data['status'][i].logged_at)
+			y: data.points[i].humidity,
+			x: formatDate(data.points[i].logged_at)
 		};
-		humidity_array.push(data['status'][i].humidity);
-		data_humidity.push(temp_dic);
+
+		humidity_array.update((n) => {
+			n.push(data.points[i].humidity);
+			return n;
+		});
+
+		data_humidity.update((n) => {
+			n.push(temp_dic);
+			return n;
+		});
 	}
 
-	let options = {
+	$: options = {
 		chart: {
 			type: 'line',
 			background: 'bg-base-200'
 		},
+		colors: ['#FF8080', '#00E6E6'],
+		stroke: {
+			curve: 'smooth'
+		},
 		series: [
 			{
 				name: 'Temperature',
-				data: data_temp
+				data: $data_temp
 			},
 			{
 				name: 'Humidity',
-				data: data_humidity
+				data: $data_humidity
 			}
 		],
 		xaxis: {
@@ -83,16 +156,16 @@
 				title: {
 					text: 'Temperature °C'
 				},
-				min: Math.min(...temperature_array) - 3,
-				max: Math.max(...temperature_array) + 3
+				min: Math.min(...$temperature_array) - 3,
+				max: Math.max(...$temperature_array) + 3
 			},
 			{
 				opposite: true,
 				title: {
 					text: 'Humidity %'
 				},
-				min: Math.min(...humidity_array) - 3,
-				max: Math.max(...humidity_array) + 3
+				min: Math.min(...$humidity_array) - 3,
+				max: Math.max(...$humidity_array) + 3
 			}
 		],
 		theme: {
@@ -110,49 +183,39 @@
 				<Chart {options} />
 			</div>
 		</div>
-		<div>
-			<div class="stats shadow stats-vertical mb-5 mx-auto">
-				<div class="stat">
-					<div class="stat-title">💧 Avg</div>
-					<div class="stat-value">
-						{calculateAverageOfArray(humidity_array)} <small>%</small>
-					</div>
-					<div class="stat-desc">Average Humidity</div>
-				</div>
 
-				<div class="stat ">
-					<div class="stat-title">💧 Min</div>
-					<div class="stat-value">{Math.min(...humidity_array)} <small>%</small></div>
-					<div class="stat-desc">Lowest Recorded</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">💧 Max</div>
-					<div class="stat-value">{Math.max(...humidity_array)} <small>%</small></div>
-					<div class="stat-desc">Highest Recorded</div>
-				</div>
-			</div>
-			<div class="stats shadow stats-vertical">
-				<div class="stat">
-					<div class="stat-title">🌡Avg</div>
-					<div class="stat-value">
-						{calculateAverageOfArray(temperature_array)} <small>°C</small>
-					</div>
-					<div class="stat-desc">Average Temperature</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">🌡Min</div>
-					<div class="stat-value">{Math.min(...temperature_array)} <small>°C</small></div>
-					<div class="stat-desc">Lowest Recorded</div>
-				</div>
-
-				<div class="stat ">
-					<div class="stat-title">🌡Max</div>
-					<div class="stat-value">{Math.max(...temperature_array)} <small>°C</small></div>
-					<div class="stat-desc">Highest Recorded</div>
-				</div>
-			</div>
+		<div class="overflow-x-auto">
+			<table class="table w-full">
+				<!-- head -->
+				<thead>
+					<tr>
+						<th />
+						<th>Stat</th>
+						<th>Latest</th>
+						<th>Max</th>
+						<th>Min</th>
+						<th>Average</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="hover">
+						<th>🌡</th>
+						<td>Temperature</td>
+						<td>{$temperature_array[$temperature_array.length - 1]} °C</td>
+						<td>{Math.max(...$temperature_array)} °C</td>
+						<td>{Math.min(...$temperature_array)} °C</td>
+						<td>{calculateAverageOfArray($temperature_array)} °C</td>
+					</tr>
+					<tr class="hover">
+						<th>💧</th>
+						<td>Humidity</td>
+						<td>{$humidity_array[$humidity_array.length - 1]} %</td>
+						<td>{Math.max(...$humidity_array)} %</td>
+						<td>{Math.min(...$humidity_array)} %</td>
+						<td>{calculateAverageOfArray($humidity_array)} %</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

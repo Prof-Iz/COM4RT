@@ -1,9 +1,5 @@
 import supabase from '$lib/db';
 
-
-
-
-
 export async function post(request) {
 
     try {
@@ -11,23 +7,24 @@ export async function post(request) {
         let body = request.body;
 
 
+
         const { data, error } = await supabase
             .from('device_detail')
-            .insert([
-                {
-                    "name": body.name,
-                    "location": body.location,
-                    "version": body.type,
-                    "owner_email": body.email,
-                },
-            ])
+            .update({
+                name: body.name,
+                location: body.loc,
+                version: body.type
+
+            })
+            .eq('device_id', body.device_id)
+
 
 
 
 
         if (error) {
             return {
-                status: 403,
+                status: 400,
                 body: {
                     error
                 },
