@@ -15,8 +15,9 @@ export async function post(request) {
                 temp: json.temp,
                 humidity: json.humidity,
                 owner_email: json.email
-            }, { returning: 'minimal' }
-        ])
+            }
+        ],
+            { returning: 'minimal' })
 
 
 
