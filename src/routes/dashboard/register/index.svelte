@@ -5,7 +5,7 @@
 	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
 	let latest_UID;
 
-	let email = JSON.parse(user).user.email;
+	let email = JSON.parse(user);
 	async function register() {
 		const submit = await fetch('/dashboard/register.json', {
 			method: 'POST',
