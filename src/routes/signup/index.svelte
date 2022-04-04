@@ -35,9 +35,7 @@
 			return;
 		}
 
-		alert(
-			'Account Created Successfully, activate your account by clicking on the link sent to your email'
-		);
+		alert('Account Created Successfully!');
 
 		redirect('/login');
 	}
