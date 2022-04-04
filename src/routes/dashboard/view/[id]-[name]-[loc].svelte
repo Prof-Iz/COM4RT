@@ -29,40 +29,44 @@
 	}
 
 	async function refetchData() {
-		const res = await fetch(`/api/view/update-${params.id}.json`);
-		const data = await res.json();
-		if (data.points.length > 0) {
-			let temp_dic = {
-				y: data.points[0].temp,
-				x: formatDate(data.points[0].logged_at)
-			};
-
-			if (temp_dic.x != $data_temp[$data_temp.length - 1].x) {
-				temperature_array.update((n) => {
-					n.push(data.points[0].temp);
-					return n;
-				});
-
-				data_temp.update((n) => {
-					n.push(temp_dic);
-					return n;
-				});
-
-				temp_dic = {
-					y: data.points[0].humidity,
+		try {
+			const res = await fetch(`/api/view/update-${params.id}.json`);
+			const data = await res.json();
+			if (data.points.length > 0) {
+				let temp_dic = {
+					y: data.points[0].temp,
 					x: formatDate(data.points[0].logged_at)
 				};
 
-				humidity_array.update((n) => {
-					n.push(data.points[0].humidity);
-					return n;
-				});
+				if (temp_dic.x != $data_temp[$data_temp.length - 1].x) {
+					temperature_array.update((n) => {
+						n.push(data.points[0].temp);
+						return n;
+					});
 
-				data_humidity.update((n) => {
-					n.push(temp_dic);
-					return n;
-				});
+					data_temp.update((n) => {
+						n.push(temp_dic);
+						return n;
+					});
+
+					temp_dic = {
+						y: data.points[0].humidity,
+						x: formatDate(data.points[0].logged_at)
+					};
+
+					humidity_array.update((n) => {
+						n.push(data.points[0].humidity);
+						return n;
+					});
+
+					data_humidity.update((n) => {
+						n.push(temp_dic);
+						return n;
+					});
+				}
 			}
+		} catch (err) {
+			pass;
 		}
 	}
 
