@@ -3,7 +3,7 @@
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
 	let user = browser ? window.localStorage.getItem('user') ?? '' : '';
-	let latest_UID;
+	let latest_UID = 'Generating..';
 
 	let email = JSON.parse(user);
 	async function register() {
