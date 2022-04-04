@@ -1,14 +1,14 @@
 <script context="module">
-	export const load = async ({ fetch }) => {
-		const res = await fetch('/dashboard/view.json');
-		const data = await res.json();
+	// export const load = async ({ fetch }) => {
+	// 	const res = await fetch('/dashboard/view.json');
+	// 	const data = await res.json();
 
-		return {
-			props: {
-				data
-			}
-		};
-	};
+	// 	return {
+	// 		props: {
+	// 			data
+	// 		}
+	// 	};
+	// };
 </script>
 
 <script>
