@@ -24,10 +24,6 @@ export async function post(request) {
     if (error) {
         return {
             status: 400,
-            body: {
-                error
-
-            },
         }
     } else {
         return {
