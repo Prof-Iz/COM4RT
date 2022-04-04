@@ -7,6 +7,7 @@
 
 	let email = JSON.parse(user);
 	async function register() {
+		latest_UID = 'Generating..';
 		const submit = await fetch('/dashboard/register.json', {
 			method: 'POST',
 			body: JSON.stringify({ name, location, type, email }),
@@ -71,7 +72,7 @@
 	<div class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-lg mb-2">Device Registered with ID</h3>
-			<h2 class="font-bold text-5xl mb-2">{latest_UID || 'Generating..'}</h2>
+			<h2 class="font-bold text-5xl mb-2">{latest_UID}</h2>
 			<p>Please use the code while setting up your Buddy</p>
 			<div class="modal-action">
 				<label
