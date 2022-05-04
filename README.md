@@ -15,16 +15,16 @@ Status: 🟣 **Fulfilled requirements for University Course, not fully complete 
 
 ## What is this?
 
-<img src="file:///D:/Projects/Project_README/COM4RT/images_readme/b85ee74fffe90eb888219d6faf12804276d200e2.png" title="" alt="2022-05-05-05-52-54-image.png" data-align="center">
+<img src="COM4RT/images_readme/b85ee74fffe90eb888219d6faf12804276d200e2.png" title="" alt="2022-05-05-05-52-54-image.png" data-align="center">
 
 COM4RT portal was designed as a real-time dashboard to view the data sent by a temperature and monitoring device that a user will register with the portal. The portal was built using *Sveltekit* and is served initially from the server and is subsequently hydrated client side.  The UI is designed to be both accessible from a mobile or desktop browser.
 
-| <img title="" src="file:///D:/Projects/Project_README/COM4RT/images_readme/35eab69a9b2c5456cd56ea27b3a6a83c65d123dd.png" alt="" width="296" data-align="center"> | <img title="" src="file:///D:/Projects/Project_README/COM4RT/images_readme/97de251d8646017067ca9038efcbc7c54ffe0907.png" alt="" width="292" data-align="center"> |
+| <img title="" src="COM4RT/images_readme/35eab69a9b2c5456cd56ea27b3a6a83c65d123dd.png" alt="" width="296" data-align="center"> | <img title="" src="COM4RT/images_readme/97de251d8646017067ca9038efcbc7c54ffe0907.png" alt="" width="292" data-align="center"> |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 Authentication was handled with Supabase as well as storing registered devices and data sent from said devices. *Row level Security* policies were implemented to protect pages and API routed from unauthorized access.
 
-<img src="file:///D:/Projects/Project_README/COM4RT/images_readme/2eee6b165647383c7a46f1a8f904438f3ef92b62.png" title="" alt="2022-05-05-06-06-32-image.png" data-align="center">
+<img src="COM4RT/images_readme/2eee6b165647383c7a46f1a8f904438f3ef92b62.png" title="" alt="2022-05-05-06-06-32-image.png" data-align="center">
 
 The portal allows for registration of devices (buddies as they were called) and generates a numeric ID for the Device. This ID is tied to the user email address as well.
 
