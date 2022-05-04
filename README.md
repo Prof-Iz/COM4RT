@@ -28,7 +28,7 @@ Authentication was handled with Supabase as well as storing registered devices a
 
 The portal allows for registration of devices (buddies as they were called) and generates a numeric ID for the Device. This ID is tied to the user email address as well.
 
-| <img src="file:///D:/Projects/Project_README/COM4RT/images_readme/2022-05-05-06-26-53-image.png" title="" alt="" data-align="center"> | <img src="file:///D:/Projects/Project_README/COM4RT/images_readme/2022-05-05-06-27-04-image.png" title="" alt="" data-align="center"> |
+| <img src="file:COM4RT/images_readme/2022-05-05-06-26-53-image.png" title="" alt="" data-align="center"> | <img src="file:COM4RT/images_readme/2022-05-05-06-27-04-image.png" title="" alt="" data-align="center"> |
 | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 
 The graph was made with [Apex Charts]([GitHub - galkatz373/svelte-apexcharts: Svelte wrapper for ApexCharts](https://github.com/galkatz373/svelte-apexcharts)) and is therefore interactive.
